@@ -30,7 +30,7 @@ RUN if [ "$SONAR" = true ] ; then \
     && reportgenerator "-reports:./coverage/*/coverage.cobertura.xml" "-targetdir:coverage" "-reporttypes:SonarQube" || echo "Reportgenerator Failed"  \
     && dotnet sonarscanner end; \
     && sonarAnalysisUrl="grep dashboardUrl **/report-task.txt" \
-    && echo "dashboard URL is ${sonarAnalysisUrl}"
+    && echo "dashboard URL is ${sonarAnalysisUrl}" \
     else echo "Sonarscanner Stage Skipped"; \
     fi
 
