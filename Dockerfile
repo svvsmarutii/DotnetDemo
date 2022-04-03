@@ -11,6 +11,7 @@ WORKDIR /src
 COPY ["DotnetDemo/DotnetDemo.csproj", "DotnetDemo/"]
 
 ARG SONAR=true
+ARG JOB_URL
 ARG sonarAnalysisUrl
 RUN dotnet restore "DotnetDemo/DotnetDemo.csproj"
 COPY  . .
@@ -29,7 +30,7 @@ RUN if [ "$SONAR" = true ] ; then \
     && dotnet test --collect:"XPlat Code Coverage" --results-directory ./coverage || echo "Tests Failed" \
     && reportgenerator "-reports:./coverage/*/coverage.cobertura.xml" "-targetdir:coverage" "-reporttypes:SonarQube" || echo "Reportgenerator Failed"  \
     && dotnet sonarscanner end \
-    && sonarAnalysisUrl="$(grep dashboardUrl .sonarqube/out/report-task.txt)" && export sonarAnalysisUrl=${sonarAnalysisUrl} || export sonarAnalysisUrl=echo "sonarscanner failed. Please check jenkins log ${JOB_URL} for exact reason" \
+    && sonarAnalysisUrl="$(grep dashboardUrl .sonarqube/out/report-task.txt)" && export sonarAnalysisUrl=${sonarAnalysisUrl} || export sonarAnalysisUrl=$(echo "sonarscanner failed. Please check jenkins log ${JOB_URL} for exact reason") \
     && echo "dashboard URL is ${sonarAnalysisUrl}"; \
     else echo "Sonarscanner Stage Skipped"; \
     fi
