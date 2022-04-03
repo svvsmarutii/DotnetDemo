@@ -29,7 +29,7 @@ RUN if [ "$SONAR" = true ] ; then \
     && dotnet test --collect:"XPlat Code Coverage" --results-directory ./coverage || echo "Tests Failed" \
     && reportgenerator "-reports:./coverage/*/coverage.cobertura.xml" "-targetdir:coverage" "-reporttypes:SonarQube" || echo "Reportgenerator Failed"  \
     && dotnet sonarscanner end \
-    && if sonarAnalysisUrl="$(grep dashboardUrl .sonarqube/out/report-task.txt)"; then export sonarAnalysisUrl=${sonarAnalysisUrl} else export sonarAnalysisUrl="$(echo "sonarscanner failed. Please check jenkins log ${JOB_URL} for exact reason")" fi\
+    && sonarAnalysisUrl="$(grep dashboardUrl .sonarqube/out/report-task.txt)" && export sonarAnalysisUrl=${sonarAnalysisUrl} || export sonarAnalysisUrl="$(echo "sonarscanner failed. Please check jenkins log ${JOB_URL} for exact reason")" \
     && echo "dashboard URL is ${sonarAnalysisUrl}"; \
     else echo "Sonarscanner Stage Skipped"; \
     fi
