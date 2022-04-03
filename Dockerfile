@@ -24,7 +24,6 @@ RUN if [ "$SONAR" = true ] ; then \
     && dotnet sonarscanner begin \
     /k:simpleapi \
     /d:sonar.host.url=http://3.109.121.132:9000/ \
-    /d:sonar.branch.name=master \
     /d:sonar.coverageReportPaths="coverage/SonarQube.xml" \
     && dotnet test --collect:"XPlat Code Coverage" --results-directory ./coverage || echo "Tests Failed" \
     && reportgenerator "-reports:./coverage/*/coverage.cobertura.xml" "-targetdir:coverage" "-reporttypes:SonarQube"  || echo "Reportgenerator Failed" \
