@@ -31,4 +31,4 @@ RUN if [ "$SONAR" = true ] ; then \
     else echo "Sonarscanner Stage Skipped"; \
     fi
 
-RUN cat /src/coverage/SonarQube.xml && grep dashboardUrl /src/coverage/SonarQube.xml
+RUN ls -lR /src/coverage && grep dashboardUrl /src/coverage/SonarQube.xml
