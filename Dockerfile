@@ -31,4 +31,4 @@ RUN if [ "$SONAR" = true ] ; then \
     else echo "Sonarscanner Stage Skipped"; \
     fi
 
-RUN ls -lR
+RUN grep dashboardUrl *
